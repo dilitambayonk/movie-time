@@ -1,8 +1,27 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+
 ## Getting Started
 
-First, run the development server:
+Init the project:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+Create `.env.local` and add variable:
+
+```bash
+NEXT_PUBLIC_API_URL=
+NEXT_PUBLIC_API_KEY=
+NEXT_PUBLIC_IMAGE_URL=
+NEXT_PUBLIC_IMAGE_DATA_BLUR=
+```
+
+
+Run the development server:
 
 ```bash
 npm run dev
