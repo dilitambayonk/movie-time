@@ -10,8 +10,8 @@ body {
   :root {
     --background: 216 17% 14%;
     --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card: 0 0% 0%;
+    --card-foreground: 0 0% 100%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
     --primary: 0 0% 9%;
@@ -33,6 +33,8 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --red-primary: 0 100% 50%;
+    --red-accent: 6 78% 57%;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -67,6 +69,6 @@ body {
     @apply border-border font-montserrat;
   }
   body {
-    @apply bg-background text-foreground text-white;
+    @apply bg-background text-[#E5E5E5];
   }
 }

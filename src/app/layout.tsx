@@ -24,10 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserratSans.variable} antialiased`}>
-        <Navbar />
-        {children}
-        <Footer />
+      <body className={`${montserratSans.variable} antialiased`} suppressHydrationWarning>
+        <main className="flex min-h-screen flex-col">
+          <Navbar />
+          <div className="flex-1">{children}</div>
+          <Footer />
+        </main>
       </body>
     </html>
   );

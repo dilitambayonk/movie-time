@@ -8,24 +8,25 @@ import {
 import { LayoutGrid, Search } from 'lucide-react';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 const genres = [
-  { name: 'Action', link: '/' },
-  { name: 'Adventure', link: '/' },
-  { name: 'Animation', link: '/' },
-  { name: 'Comedy', link: '/' },
-  { name: 'Crime', link: '/' },
-  { name: 'Documentary', link: '/' },
-  { name: 'Drama', link: '/' },
-  { name: 'Family', link: '/' },
-  { name: 'Fantasy', link: '/' },
-  { name: 'History', link: '/' },
-  { name: 'Horror', link: '/' },
+  { name: 'ACTION', link: '/' },
+  { name: 'ADVENTURE', link: '/' },
+  { name: 'ANIMATION', link: '/' },
+  { name: 'COMEDY', link: '/' },
+  { name: 'CRIME', link: '/' },
+  { name: 'DOCUMENTARY', link: '/' },
+  { name: 'DRAMA', link: '/' },
+  { name: 'FAMILY', link: '/' },
+  { name: 'FANTASY', link: '/' },
+  { name: 'HISTORY', link: '/' },
+  { name: 'HORROR', link: '/' },
 ];
 
 const Navbar = () => {
   return (
-    <nav className="fixed top-0 h-[66px] w-full bg-white/5">
+    <nav className="fixed top-0 z-50 h-[66px] w-full bg-white/5">
       <div className="container flex h-full items-center justify-between gap-x-8">
         <Image src="/logo.svg" alt="logo" width={113} height={31} priority />
         <div className="flex h-9 flex-1 items-center rounded bg-black/10 px-2">
@@ -40,7 +41,7 @@ const Navbar = () => {
           <MenubarMenu>
             <MenubarTrigger>
               <LayoutGrid size={20} className="mr-4" />
-              Categories
+              CATEGORIES
             </MenubarTrigger>
             <MenubarContent align="center">
               {genres.map((genre, index) => (
@@ -48,15 +49,15 @@ const Navbar = () => {
               ))}
             </MenubarContent>
           </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger>Movies</MenubarTrigger>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger>TV Show</MenubarTrigger>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger>Login</MenubarTrigger>
-          </MenubarMenu>
+          <Button variant="ghost" className="font-semibold">
+            MOVIES
+          </Button>
+          <Button variant="ghost" className="font-semibold">
+            TV SHOW
+          </Button>
+          <Button variant="ghost" className="font-semibold">
+            LOGIN
+          </Button>
         </Menubar>
       </div>
     </nav>

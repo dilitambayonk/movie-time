@@ -56,6 +56,10 @@ export default {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
+        red: {
+          primary: 'hsl(var(--red-primary))',
+          accent: 'hsl(var(--red-accent))',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
