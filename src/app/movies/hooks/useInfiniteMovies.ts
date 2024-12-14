@@ -1,10 +1,13 @@
-import { TParams } from '@/common/types/request';
+import { useFetchParams } from '@/app/hooks/useFetchParams';
+import { EnumGenres } from '@/common/enums/EnumGenres';
 import { TMovieByList, TResponseArray } from '@/common/types/response';
 import axios from '@/lib/axios/axios';
 import { useInfiniteQuery } from 'react-query';
 
-const useInfiniteMovies = (params: TParams) => {
-  return useInfiniteQuery<TResponseArray<TMovieByList>, Error>({
+const useInfiniteMovies = () => {
+  const { params } = useFetchParams({ page: 1, sort_by: EnumGenres.POPULARITY_DESC });
+
+  return useInfiniteQuery({
     queryKey: ['infinite-movies', params],
     queryFn: async ({ pageParam }) => {
       const response = await axios.get<TResponseArray<TMovieByList>>('/discover/movie', {

@@ -1,7 +1,7 @@
 'use client';
 
+import { useFetchParams } from '@/app/hooks/useFetchParams';
 import { useGenres } from '@/app/hooks/useGenres';
-import { TParams } from '@/common/types/request';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -14,17 +14,38 @@ import {
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { optionsPopularity } from '../constants/options';
+import { useEffect, useState } from 'react';
 
 interface FilterMoviesProps {
-  params: TParams;
-  setParams: (params: TParams) => void;
+  refetch?: () => void;
 }
 
-const FilterMovies = ({ params, setParams }: FilterMoviesProps) => {
+const FilterMovies = ({ refetch }: FilterMoviesProps) => {
+  const { params, setParams } = useFetchParams({});
   const query = useGenres();
 
+  const [listGenres, setListGenres] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (listGenres.length > 0) {
+      setParams({ with_genres: listGenres.join(','), page: 1 });
+    } else {
+      setParams({ with_genres: '', page: 1 });
+    }
+    refetch?.();
+  }, [listGenres]);
+
   const handleSortBy = (sortBy: string) => {
-    setParams({ sort_by: sortBy });
+    setParams({ sort_by: sortBy, page: 1 });
+    refetch?.();
+  };
+
+  const handleChangeGenre = (genre: string) => {
+    if (listGenres.includes(genre)) {
+      setListGenres(listGenres.filter(item => item !== genre));
+    } else {
+      setListGenres([...listGenres, genre]);
+    }
   };
 
   return (
@@ -62,7 +83,11 @@ const FilterMovies = ({ params, setParams }: FilterMoviesProps) => {
                 <label htmlFor={`genre-${genre.id}`} className="text-sm font-medium">
                   {genre.name}
                 </label>
-                <Checkbox id={`genre-${genre.id}`} className="border-white/50 bg-white/20" />
+                <Checkbox
+                  id={`genre-${genre.id}`}
+                  className="border-white/50 bg-white/20"
+                  onClick={() => handleChangeGenre(genre.name)}
+                />
               </div>
             ))}
           </div>
