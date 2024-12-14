@@ -1,3 +1,5 @@
+'use client';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -10,9 +12,10 @@ import {
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { optionsPopularity } from '../constants/options';
-import { itemsGenres } from '@/app/constants/genres';
+import { useGenres } from '@/app/hooks/useGenres';
 
 const FilterMovies = () => {
+  const query = useGenres();
   return (
     <div className="flex-1">
       <Card className="from-dark w-60 border-none bg-gradient-to-b to-background">
@@ -43,7 +46,7 @@ const FilterMovies = () => {
         <Separator />
         <CardContent className="p-6">
           <div className="space-y-4">
-            {itemsGenres.map(genre => (
+            {query.data?.genres.map(genre => (
               <div key={genre.id} className="items-top flex justify-between space-x-2">
                 <label htmlFor={`genre-${genre.id}`} className="text-sm font-medium">
                   {genre.name}

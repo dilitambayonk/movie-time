@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
       {
         hostname: 'picsum.photos',
       },
+      {
+        hostname: 'image.tmdb.org',
+      },
     ],
   },
 };

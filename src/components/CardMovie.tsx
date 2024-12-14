@@ -1,20 +1,27 @@
 'use client';
 
+import { TMovieByList } from '@/common/types/response';
+import { getDate, getImageUrl } from '@/lib/utils';
 import Image from 'next/image';
-import { Button } from './ui/button';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { Button } from './ui/button';
+import { CONFIGS } from '@/lib/configs';
 
-const CardMovie = () => {
-  const params = useParams<{ id: string }>();
+interface CardMovieProps {
+  data: TMovieByList;
+}
+
+const CardMovie = ({ data }: CardMovieProps) => {
   return (
     <div className="group relative">
       <div className="relative h-[330px] w-[220px] overflow-hidden">
         <Image
-          src="https://picsum.photos/400/300"
-          alt="img-carousel"
+          src={getImageUrl(data.poster_path)}
+          alt={data.title}
           sizes="100vw"
           className="h-auto w-full object-cover"
+          placeholder="blur"
+          blurDataURL={CONFIGS.site.imageDataBlur}
           fill
         />
         <div className="duration-50 absolute inset-0 z-10 grid translate-y-full place-content-center bg-black/80 transition ease-in-out group-hover:-translate-y-0">
@@ -32,21 +39,21 @@ const CardMovie = () => {
                   fill="#FFB802"
                 />
               </svg>
-              <span className="text-2xl font-semibold">6.5</span>
+              <span className="text-2xl font-semibold">{data.vote_average}</span>
             </div>
-            <div className="text-lg font-semibold">Action</div>
+            {/* <div className="text-lg font-semibold">Action</div> */}
             <Button variant="red" className="px-10" asChild>
-              <Link href={`/movies/${params.id}`}>VIEW</Link>
+              <Link href={`/movies/${data.id}`}>VIEW</Link>
             </Button>
           </div>
         </div>
         <div className="absolute right-0 top-0 h-8 w-12 bg-[#1E232BCC] text-center text-lg font-bold group-hover:hidden">
-          7.0
+          {String(data.vote_average).slice(0, 3)}
         </div>
       </div>
       <div className="mt-2">
-        <div className="font-semibold">Wonder Woman 1984</div>
-        <div className="text-sm text-secondary">2020</div>
+        <div className="font-semibold">{data.title}</div>
+        <div className="text-sm text-secondary">{getDate(data.release_date).year}</div>
       </div>
     </div>
   );

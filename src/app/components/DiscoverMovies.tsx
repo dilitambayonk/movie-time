@@ -1,7 +1,13 @@
+'use client';
+
 import CardMovie from '@/components/CardMovie';
 import { Button } from '@/components/ui/button';
+import { useDiscoverMovie } from '../hooks/useDiscoverMovie';
+import Loader from '@/components/Loader';
 
 const DiscoverMovies = () => {
+  const query = useDiscoverMovie();
+
   return (
     <div className="relative pt-20">
       <div className="absolute inset-x-0 top-0 h-[333px] bg-white/5" />
@@ -16,11 +22,14 @@ const DiscoverMovies = () => {
             <Button>Release Date</Button>
           </div>
         </div>
-        <div className="mt-10 grid grid-cols-5 gap-6">
-          {Array.from({ length: 10 }).map((_, index) => (
-            <CardMovie key={index} />
-          ))}
-        </div>
+        {query.data && (
+          <div className="mt-10 grid grid-cols-5 gap-6">
+            {query.data.results.map((item, index) => (
+              <CardMovie key={index} data={item} />
+            ))}
+          </div>
+        )}
+        {query.isLoading && <Loader />}
       </div>
     </div>
   );

@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import { CONFIGS } from '@/lib/configs';
 import Footer from '@/components/layout/Footer';
-import './globals.css';
 import Navbar from '@/components/layout/Navbar';
+import Providers from '@/lib/providers/Providers';
+import './globals.css';
 
 const montserratSans = Montserrat({
   variable: '--font-montserrat-sans',
@@ -26,9 +27,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${montserratSans.variable} antialiased`} suppressHydrationWarning>
         <main className="flex min-h-screen flex-col">
-          <Navbar />
-          <div className="flex-1">{children}</div>
-          <Footer />
+          <Providers className="flex-1">
+            <Navbar />
+            {children}
+            <Footer />
+          </Providers>
         </main>
       </body>
     </html>

@@ -1,5 +1,8 @@
 'use client';
 
+import { useGenres } from '@/app/hooks/useGenres';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Menubar,
   MenubarContent,
@@ -7,16 +10,15 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from '@/components/ui/menubar';
+import { cn } from '@/lib/utils';
 import { LayoutGrid, Search } from 'lucide-react';
 import Image from 'next/image';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { cn } from '@/lib/utils';
-import { itemsGenres } from '@/app/constants/genres';
+import { ScrollArea } from '../ui/scroll-area';
 
 const Navbar = () => {
+  const query = useGenres();
   const [scrolling, setScrolling] = useState<boolean>(false);
 
   useEffect(() => {
@@ -55,14 +57,16 @@ const Navbar = () => {
         </div>
         <Menubar className="gap-x-6">
           <MenubarMenu>
-            <MenubarTrigger>
+            <MenubarTrigger disabled={query.isLoading}>
               <LayoutGrid size={20} className="mr-4" />
               CATEGORIES
             </MenubarTrigger>
             <MenubarContent align="center" className="text-dark bg-white">
-              {itemsGenres.map((genre, index) => (
-                <MenubarItem key={index}>{genre.name}</MenubarItem>
-              ))}
+              <ScrollArea className="h-80">
+                {query.data?.genres.map(genre => (
+                  <MenubarItem key={genre.id}>{genre.name}</MenubarItem>
+                ))}
+              </ScrollArea>
             </MenubarContent>
           </MenubarMenu>
           <Button variant="ghost" className="font-semibold" asChild>

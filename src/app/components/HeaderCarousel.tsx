@@ -1,12 +1,20 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselDots, CarouselItem } from '@/components/ui/carousel';
-import { cn } from '@/lib/utils';
+import { cn, getDate, getImageUrl } from '@/lib/utils';
 import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useNowPlayingMovie } from '../hooks/useNowPlayingMovie';
+import { CONFIGS } from '@/lib/configs';
 
 const HeaderCarousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  const query = useNowPlayingMovie();
+
+  if (query.isLoading) {
+    return null;
+  }
 
   return (
     <div className="overflow-hidden pb-10 pt-20">
@@ -22,19 +30,21 @@ const HeaderCarousel = () => {
         className="mx-auto w-full max-w-xl"
       >
         <CarouselContent>
-          {Array.from({ length: 5 }).map((_, index) => (
+          {query.data?.results.map((item, index) => (
             <CarouselItem
-              key={index}
+              key={item.id}
               className={cn(currentSlide === index ? 'opacity-100' : 'opacity-50')}
             >
               <div className="p-1">
                 <Card className="flex h-[324px] rounded border-none">
                   <div className="relative h-full w-[243px] scale-110">
                     <Image
-                      src="https://picsum.photos/400/300"
-                      alt="img-carousel"
+                      src={getImageUrl(item.poster_path)}
+                      alt={item.title}
                       sizes="100vw"
                       className="h-auto w-full object-cover"
+                      placeholder="blur"
+                      blurDataURL={CONFIGS.site.imageDataBlur}
                       fill
                     />
                   </div>
@@ -52,20 +62,15 @@ const HeaderCarousel = () => {
                           fill="#FFB802"
                         />
                       </svg>
-                      <span className="ml-1 text-lg font-semibold">4.5</span>
+                      <span className="ml-1 text-lg font-semibold">{item.vote_average}</span>
                     </div>
-                    <div className="text-[28px]">Space Sweepers</div>
+                    <div className="text-[28px]">{item.title}</div>
                     <div className="flex items-center gap-x-2">
-                      2021
-                      <div className="h-[6.7px] w-[6.5px] rounded-full bg-white/50" />
-                      Sci-Fi
+                      {getDate(item.release_date).year}
+                      {/* <div className="h-[6.7px] w-[6.5px] rounded-full bg-white/50" />
+                      Sci-Fi */}
                     </div>
-                    <div className="text-xs">
-                      When the crew of a space junk collector ship called The Victory discovers a
-                      humanoid robot named Dorothy that&apos;s known to be a weapon of mass
-                      destruction, they get involved in a risky business deal which puts their lives
-                      at stake.
-                    </div>
+                    <div className="text-xs">{item.overview.slice(0, 100)}...</div>
                   </CardContent>
                 </Card>
               </div>

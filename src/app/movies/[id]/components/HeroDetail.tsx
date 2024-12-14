@@ -1,7 +1,10 @@
 import { Separator } from '@/components/ui/separator';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
 
 const HeroDetail = () => {
+  const params = useParams<{ id: string }>();
+
   return (
     <>
       <div className="relative h-[440px] w-screen overflow-hidden">
