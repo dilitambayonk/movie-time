@@ -10,10 +10,11 @@ body {
   :root {
     --background: 216 17% 14%;
     --foreground: 0 0% 3.9%;
+    --dark: 215 44% 10%;
     --card: 0 0% 0%;
     --card-foreground: 0 0% 100%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
+    --popover: 217 20% 8%;
+    --popover-foreground: 0 0% 100%;
     --primary: 0 0% 9%;
     --primary-foreground: 0 0% 98%;
     --secondary: 0 0% 57%;
@@ -24,7 +25,7 @@ body {
     --accent-foreground: 0 0% 9%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
+    --border: 0 0% 14%;
     --input: 0 0% 89.8%;
     --ring: 0 0% 3.9%;
     --chart-1: 12 76% 61%;
