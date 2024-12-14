@@ -64,7 +64,9 @@ const Navbar = () => {
             <MenubarContent align="center" className="text-dark bg-white">
               <ScrollArea className="h-80">
                 {query.data?.genres.map(genre => (
-                  <MenubarItem key={genre.id}>{genre.name}</MenubarItem>
+                  <MenubarItem key={genre.id} asChild>
+                    <Link href={`/movies?with_genres=${genre.name}`}>{genre.name}</Link>
+                  </MenubarItem>
                 ))}
               </ScrollArea>
             </MenubarContent>
