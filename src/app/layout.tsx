@@ -28,15 +28,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${montserratSans.variable} antialiased`} suppressHydrationWarning>
-        <main className="flex min-h-screen flex-col">
-          <Suspense fallback={<Loader />}>
-            <Providers className="flex-1">
-              <Navbar />
-              {children}
-              <Footer />
-            </Providers>
-          </Suspense>
-        </main>
+        <Suspense fallback={<Loader />}>
+          <Providers className="flex min-h-screen flex-col">
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </Providers>
+        </Suspense>
       </body>
     </html>
   );

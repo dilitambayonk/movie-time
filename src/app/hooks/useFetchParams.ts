@@ -1,11 +1,11 @@
-import { optionsPopularity } from '@/app/movies/constants/options';
+import { EnumGenres } from '@/common/enums/EnumGenres';
 import { TParams } from '@/common/types/request';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export const useFetchParams = ({
   page = 1,
-  sort_by = optionsPopularity[0].value,
+  sort_by = EnumGenres.POPULARITY_DESC,
 }: {
   page?: number;
   sort_by?: string;
@@ -26,7 +26,7 @@ export const useFetchParams = ({
       ...prev,
       page,
     }));
-  }, [page]);
+  }, [page, sort_by]);
 
   useEffect(() => {
     const url = new URL(window.location.href);

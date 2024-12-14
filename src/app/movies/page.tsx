@@ -1,4 +1,3 @@
-import FilterMovies from './components/FilterMovies';
 import ListMovies from './components/ListMovies';
 
 const MoviesPage = () => {
@@ -10,10 +9,7 @@ const MoviesPage = () => {
           <div className="h-1.5 w-28 bg-red-accent" />
           <h3 className="text-4xl font-semibold">Movies</h3>
         </div>
-        <div className="mt-20 flex gap-x-8">
-          <FilterMovies />
-          <ListMovies />
-        </div>
+        <ListMovies />
       </div>
     </div>
   );

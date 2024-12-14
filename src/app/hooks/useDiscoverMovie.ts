@@ -5,7 +5,7 @@ import { useFetchParams } from './useFetchParams';
 import { EnumGenres } from '@/common/enums/EnumGenres';
 
 export const useDiscoverMovie = () => {
-  const params = useFetchParams({ page: 1, sort_by: EnumGenres.POPULARITY_ASC });
+  const { params } = useFetchParams({ page: 1, sort_by: EnumGenres.POPULARITY_DESC });
 
   const dataQuery = useQuery({
     queryKey: ['discover-movie', params],

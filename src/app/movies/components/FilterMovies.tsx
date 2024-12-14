@@ -1,5 +1,7 @@
 'use client';
 
+import { useGenres } from '@/app/hooks/useGenres';
+import { TParams } from '@/common/types/request';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -12,10 +14,19 @@ import {
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { optionsPopularity } from '../constants/options';
-import { useGenres } from '@/app/hooks/useGenres';
 
-const FilterMovies = () => {
+interface FilterMoviesProps {
+  params: TParams;
+  setParams: (params: TParams) => void;
+}
+
+const FilterMovies = ({ params, setParams }: FilterMoviesProps) => {
   const query = useGenres();
+
+  const handleSortBy = (sortBy: string) => {
+    setParams({ sort_by: sortBy });
+  };
+
   return (
     <div className="flex-1">
       <Card className="from-dark w-60 border-none bg-gradient-to-b to-background">
@@ -24,7 +35,7 @@ const FilterMovies = () => {
         </CardHeader>
         <Separator />
         <CardContent className="p-6">
-          <Select>
+          <Select defaultValue={params.sort_by} onValueChange={handleSortBy}>
             <SelectTrigger className="w-full border-none">
               <SelectValue placeholder="Popularity" />
             </SelectTrigger>

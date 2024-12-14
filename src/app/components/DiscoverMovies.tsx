@@ -28,8 +28,8 @@ const DiscoverMovies = () => {
           <div className="space-x-4">
             <Button
               className="hover:cursor-pointer"
-              variant={params.sort_by === EnumGenres.POPULARITY_ASC ? 'red' : 'default'}
-              onClick={() => handleSortBy(EnumGenres.POPULARITY_ASC)}
+              variant={params.sort_by === EnumGenres.POPULARITY_DESC ? 'red' : 'default'}
+              onClick={() => handleSortBy(EnumGenres.POPULARITY_DESC)}
             >
               Popularity
             </Button>

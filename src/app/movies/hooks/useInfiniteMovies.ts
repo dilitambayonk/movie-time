@@ -6,12 +6,9 @@ import { useInfiniteQuery } from 'react-query';
 const useInfiniteMovies = (params: TParams) => {
   return useInfiniteQuery<TResponseArray<TMovieByList>, Error>({
     queryKey: ['infinite-movies', params],
-    queryFn: async ({ pageParam = 1 }) => {
+    queryFn: async ({ pageParam }) => {
       const response = await axios.get<TResponseArray<TMovieByList>>('/discover/movie', {
-        params: {
-          page: pageParam,
-          ...params,
-        },
+        params: { ...params, page: pageParam },
       });
       return response.data;
     },
@@ -19,6 +16,7 @@ const useInfiniteMovies = (params: TParams) => {
     getNextPageParam(lastPage, allPages) {
       return lastPage.total_pages > 0 ? allPages.length + 1 : undefined;
     },
+    enabled: params.sort_by !== undefined,
   });
 };
 
