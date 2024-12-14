@@ -1,7 +1,12 @@
+'use client';
+
 import Image from 'next/image';
 import { Button } from './ui/button';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 const CardMovie = () => {
+  const params = useParams<{ id: string }>();
   return (
     <div className="group relative">
       <div className="relative h-[330px] w-[220px] overflow-hidden">
@@ -30,8 +35,8 @@ const CardMovie = () => {
               <span className="text-2xl font-semibold">6.5</span>
             </div>
             <div className="text-lg font-semibold">Action</div>
-            <Button variant="red" className="px-10">
-              VIEW
+            <Button variant="red" className="px-10" asChild>
+              <Link href={`/movies/${params.id}`}>VIEW</Link>
             </Button>
           </div>
         </div>
