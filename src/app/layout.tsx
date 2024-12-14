@@ -4,6 +4,8 @@ import { CONFIGS } from '@/lib/configs';
 import Footer from '@/components/layout/Footer';
 import Navbar from '@/components/layout/Navbar';
 import Providers from '@/lib/providers/Providers';
+import { Suspense } from 'react';
+import Loader from '@/components/Loader';
 import './globals.css';
 
 const montserratSans = Montserrat({
@@ -27,11 +29,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${montserratSans.variable} antialiased`} suppressHydrationWarning>
         <main className="flex min-h-screen flex-col">
-          <Providers className="flex-1">
-            <Navbar />
-            {children}
-            <Footer />
-          </Providers>
+          <Suspense fallback={<Loader />}>
+            <Providers className="flex-1">
+              <Navbar />
+              {children}
+              <Footer />
+            </Providers>
+          </Suspense>
         </main>
       </body>
     </html>
