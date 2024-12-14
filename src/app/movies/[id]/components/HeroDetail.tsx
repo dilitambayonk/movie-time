@@ -1,25 +1,40 @@
+'use client';
+
 import { Separator } from '@/components/ui/separator';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
+import { useDetailMovie } from '../hooks/useDetailMovie';
+import Loader from '@/components/Loader';
+import { getDate, getImageUrl } from '@/lib/utils';
+import { CONFIGS } from '@/lib/configs';
 
 const HeroDetail = () => {
-  const params = useParams<{ id: string }>();
+  const query = useDetailMovie();
+
+  if (query.isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
       <div className="relative h-[440px] w-screen overflow-hidden">
         <Image
-          src="https://picsum.photos/1000/400"
-          alt="img-carousel"
+          src={getImageUrl(query.data?.backdrop_path || '')}
+          alt={'hero-' + query.data?.title || ''}
           sizes="100vw"
-          className="h-auto w-full object-cover opacity-50"
+          className="h-auto w-full object-cover opacity-20"
+          placeholder="blur"
+          blurDataURL={CONFIGS.site.imageDataBlur}
           fill
         />
         <div className="absolute inset-x-0 bottom-0">
           <div className="container mb-10 space-y-1 pl-[250px]">
-            <div className="text-lg font-medium">2020</div>
-            <h1 className="text-4xl font-semibold">Wonder Woman 1984</h1>
-            <div className="text-sm font-medium">Fantasy, Action, Adventure</div>
+            <div className="text-lg font-medium">
+              {getDate(query.data?.release_date || '').year}
+            </div>
+            <h1 className="text-4xl font-semibold">{query.data?.original_title}</h1>
+            <div className="text-sm font-medium">
+              {query.data?.genres.map(item => item.name).join(', ')}
+            </div>
           </div>
           <div className="h-20 bg-black/50">
             <div className="container flex h-full items-center gap-x-6 py-4 pl-[250px]">
@@ -36,31 +51,35 @@ const HeroDetail = () => {
                     fill="#FFB802"
                   />
                 </svg>
-                <span className="text-4xl font-semibold">7.0</span>
+                <span className="text-4xl font-semibold">{query.data?.vote_average}</span>
                 <div className="space-y-1 uppercase">
                   <div className="text-xs font-medium text-white/50">User Score</div>
-                  <div className="text-xs font-medium">3621 Votes</div>
+                  <div className="text-xs font-medium">{query.data?.vote_count} Votes</div>
                 </div>
               </div>
               <Separator orientation="vertical" className="bg-white/20" />
               <div className="space-y-1 uppercase">
                 <div className="text-xs font-medium text-white/50">Status</div>
-                <div className="text-xs font-medium">Released</div>
+                <div className="text-xs font-medium">{query.data?.status}</div>
               </div>
               <Separator orientation="vertical" className="bg-white/20" />
               <div className="space-y-1 uppercase">
                 <div className="text-xs font-medium text-white/50">Language</div>
-                <div className="text-xs font-medium">English</div>
+                <div className="text-xs font-medium">{query.data?.spoken_languages[0].name}</div>
               </div>
               <Separator orientation="vertical" className="bg-white/20" />
               <div className="space-y-1 uppercase">
                 <div className="text-xs font-medium text-white/50">Budget</div>
-                <div className="text-xs font-medium">$200,000,000.00</div>
+                <div className="text-xs font-medium">
+                  ${query.data?.budget.toLocaleString('ID')}
+                </div>
               </div>
               <Separator orientation="vertical" className="bg-white/20" />
               <div className="space-y-1 uppercase">
                 <div className="text-xs font-medium text-white/50">Production</div>
-                <div className="text-xs font-medium">Entertaiment</div>
+                <div className="text-xs font-medium">
+                  {query.data?.production_companies[0].name}
+                </div>
               </div>
             </div>
           </div>
@@ -70,19 +89,18 @@ const HeroDetail = () => {
         <div className="container relative left-0">
           <div className="absolute bottom-0 h-[330px] w-[220px] overflow-hidden">
             <Image
-              src="https://picsum.photos/400/300"
-              alt="img-carousel"
+              src={getImageUrl(query.data?.poster_path || '')}
+              alt={'poster-' + query.data?.title || ''}
               sizes="100vw"
               className="h-auto w-full object-cover"
+              placeholder="blur"
+              blurDataURL={CONFIGS.site.imageDataBlur}
               fill
             />
           </div>
           <div className="space-y-2 pl-[250px]">
             <div className="font-semibold text-red-accent">OVERVIEW</div>
-            <div className="max-w-2xl leading-relaxed">
-              Wonder Woman comes into conflict with the Soviet Union during the Cold War in the
-              1980s and finds a formidable foe by the name of the Cheetah.
-            </div>
+            <div className="max-w-2xl leading-relaxed">{query.data?.overview}</div>
           </div>
         </div>
       </div>

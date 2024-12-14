@@ -1,23 +1,34 @@
+'use client';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { useMovieReviews } from '../hooks/useMovieReviews';
+import { formatDate, getImageUrl } from '@/lib/utils';
 
 const Reviews = () => {
+  const query = useMovieReviews();
+
   return (
     <div className="bg-white pb-10 pt-4">
       <div className="container">
-        <div className="font-semibold text-red-accent">OVERVIEW</div>
+        <div className="font-semibold text-red-accent">REVIEWS</div>
         <div className="mt-6 grid grid-cols-2 gap-x-8">
-          {Array.from({ length: 2 }).map((_, index) => (
-            <Card key={index} className="rounded-2xl border-none bg-[#F9F9F9] text-black">
+          {query.data?.results.map(review => (
+            <Card key={review.id} className="rounded-2xl border-none bg-[#F9F9F9] text-black">
               <CardHeader className="flex-row items-start justify-between space-y-0">
                 <div className="flex items-center gap-x-4">
                   <Avatar className="h-12 w-12">
-                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarImage
+                      src={getImageUrl(review.author_details.avatar_path)}
+                      alt={review.author_details.username}
+                    />
+                    <AvatarFallback>
+                      {review.author_details.username.slice(0, 1).toUpperCase()}
+                    </AvatarFallback>
                   </Avatar>
                   <div>
-                    <div className="text-sm font-bold">SWITCH.</div>
-                    <div className="text-xs text-[#666666]">December 18, 2020</div>
+                    <div className="text-sm font-bold">{review.author_details.username}</div>
+                    <div className="text-xs text-[#666666]">{formatDate(review.updated_at)}</div>
                   </div>
                 </div>
                 <div className="flex gap-x-1 rounded-md bg-[#C4C4C447] p-2 text-4xl">
@@ -35,20 +46,14 @@ const Reviews = () => {
                     />
                   </svg>
 
-                  <span className="font-semibold">7.0</span>
+                  <span className="font-semibold">{review.author_details.rating || ''}</span>
                 </div>
               </CardHeader>
               <CardContent>
                 <p className="text-sm italic">
-                  It isn&apos;t as easy as saying &apos;Wonder Woman 1984&apos; is a good or bad
-                  movie. The pieces are there, and there are moments I adore, but it does come
-                  across as a bit of a mess, even though the action sequences are breathtaking. If
-                  you&apos;re a fan of the original film, you&apos;ll be more willing to take the
-                  ride, but for those more indifferent, it may be a bit of a blander sit. If you can
-                  and are planning to watch it, the theatrical experience is the way to go - there
-                  is nothing like seeing these stunning sets, fun action scenes and hearing
-                  Zimmer&apos;s jaw-dropping score like on the big screen. - Chris dos Santos...
-                  read the rest.
+                  {review.content.length > 200
+                    ? review.content.slice(0, 200) + '...'
+                    : review.content}
                 </p>
               </CardContent>
             </Card>
