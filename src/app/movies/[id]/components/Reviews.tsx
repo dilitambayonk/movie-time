@@ -12,7 +12,7 @@ const Reviews = () => {
     <div className="bg-white pb-10 pt-4">
       <div className="container">
         <div className="font-semibold text-red-accent">REVIEWS</div>
-        <div className="mt-6 grid grid-cols-2 gap-x-8">
+        <div className="mt-6 grid grid-cols-2 gap-8">
           {query.data?.results.map(review => (
             <Card key={review.id} className="rounded-2xl border-none bg-[#F9F9F9] text-black">
               <CardHeader className="flex-row items-start justify-between space-y-0">
@@ -23,7 +23,7 @@ const Reviews = () => {
                       alt={review.author_details.username}
                     />
                     <AvatarFallback>
-                      {review.author_details.username.slice(0, 1).toUpperCase()}
+                      {review.author_details.username.charAt(1).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                   <div>

@@ -2,7 +2,6 @@
 
 import { useGenres } from '@/app/hooks/useGenres';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import {
   Menubar,
   MenubarContent,
@@ -11,11 +10,12 @@ import {
   MenubarTrigger,
 } from '@/components/ui/menubar';
 import { cn } from '@/lib/utils';
-import { LayoutGrid, Search } from 'lucide-react';
+import { LayoutGrid } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { ScrollArea } from '../ui/scroll-area';
+import SearchBar from './SearchBar';
 
 const Navbar = () => {
   const query = useGenres();
@@ -47,14 +47,7 @@ const Navbar = () => {
         <Link href="/">
           <Image src="/logo.svg" alt="logo" width={113} height={31} priority />
         </Link>
-        <div className="flex h-9 flex-1 items-center rounded bg-black/10 px-2">
-          <Image src="/icon-movie.svg" alt="icon-movie" width={24} height={24} priority />
-          <Input
-            className="border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
-            placeholder="Find Movie"
-          />
-          <Search size={16} />
-        </div>
+        <SearchBar />
         <Menubar className="gap-x-6">
           <MenubarMenu>
             <MenubarTrigger disabled={query.isLoading}>
