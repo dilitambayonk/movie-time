@@ -87,7 +87,7 @@ const HeroDetail = () => {
       </div>
       <div className="bg-white py-8 text-black">
         <div className="container relative left-0">
-          <div className="absolute bottom-0 h-[330px] w-[220px] overflow-hidden">
+          <div className="absolute top-0 h-[330px] w-[220px] -translate-y-2/3 overflow-hidden">
             <Image
               src={getImageUrl(query.data?.poster_path || '')}
               alt={'poster-' + query.data?.title || ''}
